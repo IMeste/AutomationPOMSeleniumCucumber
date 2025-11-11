@@ -15,6 +15,7 @@ public class CommonSteps {
     public void setUp() {
         ArrayList<String> optionList = new ArrayList<>();
         ChromeOptions options = new ChromeOptions();
+        optionList.add("--headless");
         optionList.add("--start-maximized");
         optionList.add("--incognito");
         options.addArguments(optionList);

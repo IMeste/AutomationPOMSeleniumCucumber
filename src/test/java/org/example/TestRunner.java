@@ -10,9 +10,15 @@ import org.junit.runner.RunWith;
         glue = "steps",
         //dryRun = true,
         //monochrome = true,
-        tags = "@AdvSearch00 or @AdvSearch01",
+        //tags = "@LoginOK",
         //name = "Ebay",
-        plugin = {"pretty", "html:target/cucumber-reports"}
+        plugin = {
+                "pretty",
+                "html:target/cucumber-reports.html",
+                "json:target/cucumber-reports/cucumber.json",
+                "junit:target/cucumber-reports/cucumber.xml",
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
+        }
 )
 public class TestRunner {
 }
