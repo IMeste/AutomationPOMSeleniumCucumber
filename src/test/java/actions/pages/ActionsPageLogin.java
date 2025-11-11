@@ -25,4 +25,8 @@ public class ActionsPageLogin {
     public void clickButtonLogin(){
         elementsPageLogin.buttonLogin.click();
     }
+
+    public String getTextMessageError(){
+        return elementsPageLogin.messageError.getText();
+    }
 }

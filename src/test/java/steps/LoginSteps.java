@@ -36,12 +36,16 @@ public class LoginSteps {
         actionsPageLogin.clickButtonLogin();
     }
 
-    @Then("Redirecciona a la url {string}")
-    public void redirecciona_a_la_url(String expectedUrl) {
+    @Then("Sistema redirecciona a la url {string}")
+    public void sistema_redirecciona_a_la_url(String expectedUrl) {
         String actualUrl = actionsCommon.getCurrentUrl();
         Assert.assertEquals("Urls do not match", expectedUrl, actualUrl);
     }
 
+    @Then("Sistema responde el error {string}")
+    public void sistema_responde_el_error(String error){
+        Assert.assertEquals("Mensaje de error no coincide", error, actionsPageLogin.getTextMessageError());
+    }
 }
 
 
