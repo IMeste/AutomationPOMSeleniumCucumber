@@ -1,11 +1,8 @@
 package steps;
 
-import actions.pages.ActionsCommon;
-import actions.pages.ActionsInventory;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
+import support.ActionsCommon;
+import pages.inventory.ActionsInventory;
 import io.cucumber.java.en.When;
-import org.junit.Assert;
 
 public class InventorySteps {
     private final ActionsCommon actionsCommon;

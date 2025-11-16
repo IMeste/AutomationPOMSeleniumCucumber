@@ -1,17 +1,16 @@
-package actions.pages;
+package pages.inventory;
 
-import elements.pages.ElementsInventory;
 import org.openqa.selenium.WebDriver;
-import steps.CommonSteps;
+import drivers.DriverFactory;
 
 public class ActionsInventory {
 
     private final WebDriver driver;
     private final ElementsInventory elementsInventory;
 
-    public ActionsInventory(CommonSteps commonSteps) {
-        driver = CommonSteps.getDriver();
-        elementsInventory = new ElementsInventory(commonSteps);
+    public ActionsInventory() {
+        driver = DriverFactory.getDriver();
+        elementsInventory = new ElementsInventory();
     }
 
     public void addSauceLabsBackpack(){

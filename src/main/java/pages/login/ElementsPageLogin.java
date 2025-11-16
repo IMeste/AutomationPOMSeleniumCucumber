@@ -1,10 +1,10 @@
-package elements.pages;
+package pages.login;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import steps.CommonSteps;
+import drivers.DriverFactory;
 
 public class ElementsPageLogin {
     public WebDriver driver;
@@ -13,8 +13,8 @@ public class ElementsPageLogin {
     @FindBy(xpath = "//input[@id='login-button']") public WebElement buttonLogin;
     @FindBy(css = "h3[data-test='error']") public WebElement messageError;
 
-    public ElementsPageLogin(CommonSteps commonSteps) {
-        this.driver = CommonSteps.getDriver();
+    public ElementsPageLogin() {
+        this.driver = DriverFactory.getDriver();
         PageFactory.initElements(driver, this);
     }
 }

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.example</groupId>
-  <artifactId>selenium-cucumber-testing</artifactId>
+  <artifactId>AutomationPOMSeleniumCucumber</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
@@ -46,13 +46,11 @@
           <groupId>org.seleniumhq.selenium</groupId>
           <artifactId>selenium-chrome-driver</artifactId>
           <version>4.19.0</version>
-          <scope>test</scope>
       </dependency>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-support</artifactId>
       <version>4.19.0</version>
-      <scope>test</scope>
     </dependency>
     <!-- https://mvnrepository.com/artifact/net.masterthought/maven-cucumber-reporting -->
     <dependency>

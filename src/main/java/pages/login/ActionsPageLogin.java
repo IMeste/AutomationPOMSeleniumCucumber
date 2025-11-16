@@ -1,17 +1,16 @@
-package actions.pages;
+package pages.login;
 
-import elements.pages.ElementsPageLogin;
 import org.openqa.selenium.WebDriver;
-import steps.CommonSteps;
+import drivers.DriverFactory;
 
 public class ActionsPageLogin {
 
     private final WebDriver driver;
     private final ElementsPageLogin elementsPageLogin;
 
-    public ActionsPageLogin(CommonSteps commonSteps) {
-        driver = CommonSteps.getDriver();
-        elementsPageLogin = new ElementsPageLogin(commonSteps);
+    public ActionsPageLogin() {
+        driver = DriverFactory.getDriver();
+        elementsPageLogin = new ElementsPageLogin();
     }
 
     public void sendUsername (String username){

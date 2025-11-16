@@ -1,7 +1,7 @@
 package steps;
 
-import actions.pages.ActionsCommon;
-import actions.pages.ActionsPageLogin;
+import support.ActionsCommon;
+import pages.login.ActionsPageLogin;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

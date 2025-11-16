@@ -1,16 +1,16 @@
-package actions.pages;
+package support;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import steps.CommonSteps;
+import drivers.DriverFactory;
 
 public class ActionsCommon {
 
     private final WebDriver driver;
-    private CommonSteps commonSteps;
+    private DriverFactory commonSteps;
 
-    public ActionsCommon(CommonSteps commonSteps) {
-        this.driver = CommonSteps.getDriver();
+    public ActionsCommon() {
+        this.driver = DriverFactory.getDriver();
     }
 
     public void navigateTo(String url) {

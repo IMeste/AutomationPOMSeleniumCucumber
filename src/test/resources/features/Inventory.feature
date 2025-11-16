@@ -6,9 +6,9 @@ Feature: Swag Labs Login Scenarios
     When Ingreso la clave "secret_sauce"
     When Click sobre el botón de login
 
-  @AddProduct
+  @AddProduct @env:qa
   Scenario: Añadir producto al carro
     When Añadir "Sauce Labs Backpack" al carro de compra
     When Añadir "Sauce Labs Bike Light" al carro de compra
     When Click sobre el carro de compra
-    Then Sistema redirecciona a la url "https://www.saucedemo.com/cart.htmll"
+    Then Sistema redirecciona a la url "https://www.saucedemo.com/cart.html"
