@@ -71,16 +71,30 @@ Para ejecutar este framework necesitas lo siguiente:
 
 ### Ejecución por ambiente
 ```
-mvn test -Denvironment=qa    // No levanta el reporte de Allure, solo ejecuta las pruebas
-mvn test verify -Denvironment=qa    // Levanta el reporte de Allure
-mvn test -Denvironment=dev // No implementado
-mvn test -Denvironment=prod // No implementado
+# Al no ingresar -Denvironment, el ambiente por defecto es qa
+# Ejecuta todo y no levanta el reporte de Allure
+mvn test
+
+# Limpia los resultados previos de Allure, ejecuta todo y levanta el reporte de Allure con los resultados de la ejecución actual
+mvn clean verify
+
+# Si quieres ejecutar las pruebas en un ambiente diferente a qa, ejecutarla de esta forma (No hay configurados ambientes apartes de qa)
+mvn test -Denvironment=desa
+mvn clean verify -Denvironment=desa
 ```
 
 ### Ejecución por tag de Cucumber
 ```
-mvn test -Dcucumber.filter.tags="@PrioridadAlta"    // No levanta el reporte de Allure, solo ejecuta las pruebas
-mvn test verify -Dcucumber.filter.tags="@PrioridadAlta"    // Levanta el reporte de Allure
+# Al no ingresar -Denvironment, el ambiente por defecto es qa
+# Ejecuta todo y no levanta el reporte de Allure
+mvn test "-Dcucumber.filter.tags=@PrioridadAlta"
+
+# Limpia los resultados previos de Allure, ejecuta todo y levanta el reporte de Allure con los resultados de la ejecución actual
+mvn clean verify "-Dcucumber.filter.tags=@PrioridadAlta"
+
+# Si quieres ejecutar las pruebas en un ambiente diferente a qa, ejecutarla de esta forma (No hay configurados ambientes apartes de qa)
+mvn test "-Dcucumber.filter.tags=@PrioridadAlta" -Denvironment=desa
+mvn clean verify "-Dcucumber.filter.tags=@PrioridadAlta" -Denvironment=desa
 ```
 
 ---

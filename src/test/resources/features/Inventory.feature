@@ -6,7 +6,7 @@ Feature: Swag Labs Login Scenarios
     When Ingreso la clave "secret_sauce"
     When Click sobre el botón de login
 
-  @AddProduct @env:qa
+  @PrioridadAlta @env:qa
   Scenario: Añadir producto al carro
     When Añadir "Sauce Labs Backpack" al carro de compra
     When Añadir "Sauce Labs Bike Light" al carro de compra
