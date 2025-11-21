@@ -1,6 +1,7 @@
 package config;
 
 import io.cucumber.java.Scenario;
+import static java.lang.System.getProperty;
 
 public class EnvironmentManager {
 
@@ -17,7 +18,7 @@ public class EnvironmentManager {
         }
 
         // Si no hay tag, usar lo que vino por Maven (-Denvironment=xxx)
-        String envFromMaven = System.getProperty("environment");
+        String envFromMaven = getProperty("environment");
 
         if (envFromMaven != null) {
             environment = envFromMaven;
@@ -29,13 +30,23 @@ public class EnvironmentManager {
         System.setProperty("environment", "qa");
     }
 
-    private static String getEnvironmentFromTag(Scenario scenario) {
+    public static String getEnvironmentFromTag(Scenario scenario) {
         for (String tag : scenario.getSourceTagNames()) {
             if (tag.startsWith("@env:")) {
                 return tag.replace("@env:", "");
             }
         }
         return null;
+    }
+
+    public static void initFromSystem() {
+        String env = System.getProperty("environment");
+
+        if (env == null || env.isEmpty()) {
+            env = "qa";
+        }
+
+        environment = env.toLowerCase();
     }
 
     public static String getEnvironment() {

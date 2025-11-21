@@ -10,9 +10,29 @@ import support.ScreenshotHelper;
 public class Hooks {
 
     @Before(order = 0)
-    public void initEnvironment(Scenario scenario) {
-        EnvironmentManager.init(scenario);
+    public void loadEnvironment() {
+        // Carga environment desde system property (Maven) o default
+        EnvironmentManager.initFromSystem();
+    }
+
+    @Before(order = 1)
+    public void loadConfig() {
+        // Carga el archivo properties correcto
         ConfigReader.init();
+    }
+
+    @Before(order = 2)
+    public void createDriver() {
+        DriverFactory.createDriver();
+    }
+
+    @Before(order = 3)
+    public void overrideEnvironmentWithTag(Scenario scenario) {
+        String tagEnv = EnvironmentManager.getEnvironmentFromTag(scenario);
+        if (tagEnv != null) {
+            System.setProperty("environment", tagEnv);
+            ConfigReader.init(); // recarga el properties
+        }
     }
 
     @Before

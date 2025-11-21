@@ -1,5 +1,6 @@
 package steps;
 
+import config.ConfigReader;
 import support.ActionsCommon;
 import pages.login.ActionsPageLogin;
 import io.cucumber.java.en.Given;
@@ -18,7 +19,8 @@ public class LoginSteps {
 
     @Given("Ingreso a la pagina de Swag Labs")
     public void ingreso_a_la_pagina_de_Swag_Labs() {
-        actionsCommon.navigateTo("https://www.saucedemo.com");
+        actionsCommon.navigateTo(ConfigReader.get("base.url"));
+
     }
 
     @When("Ingreso el usuario {string}")

@@ -1,9 +1,13 @@
 package drivers;
 
+import config.ConfigReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
+import java.time.Duration;
 import java.util.ArrayList;
 
 public class DriverFactory {
@@ -18,14 +22,45 @@ public class DriverFactory {
     }
 
     public static void createDriver() {
-        ArrayList<String> optionList = new ArrayList<>();
-        ChromeOptions options = new ChromeOptions();
-        optionList.add("--headless");
-        optionList.add("--start-maximized");
-        optionList.add("--incognito");
-        options.addArguments(optionList);
+        if (driver == null) {
+            String browser = ConfigReader.get("browser");
+            boolean headless = Boolean.parseBoolean(ConfigReader.get("headless"));
+            int timeout = Integer.parseInt(ConfigReader.get("timeout"));
 
-        driver = new ChromeDriver(options);
+            switch (browser) {
+                case "chromium":
+                    ArrayList<String> optionListChromium = new ArrayList<>();
+                    ChromeOptions optionsChromium = new ChromeOptions();
+                    if (headless) optionListChromium.add("--headless");
+                    optionListChromium.add("--start-maximized");
+                    optionListChromium.add("--incognito");
+                    optionsChromium.addArguments(optionListChromium);
+                    driver = new ChromeDriver(optionsChromium);
+                    break;
+
+                case "chrome":
+                    ArrayList<String> optionListChrome = new ArrayList<>();
+                    ChromeOptions optionsChrome = new ChromeOptions();
+                    if (headless) optionListChrome.add("--headless");
+                    optionListChrome.add("--start-maximized");
+                    optionListChrome.add("--incognito");
+                    optionsChrome.addArguments(optionListChrome);
+                    driver = new ChromeDriver(optionsChrome);
+                    break;
+
+                case "firefox":
+                    FirefoxOptions firefoxOptions = new FirefoxOptions();
+                    if (headless) firefoxOptions.addArguments("--headless");
+                    driver = new FirefoxDriver(firefoxOptions);
+                    break;
+
+                default:
+                    throw new RuntimeException("Navegador no soportado: " + browser);
+            }
+
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeout));
+            driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(timeout));
+        }
     }
 
     public static void quitDriver() {

@@ -12,23 +12,18 @@ public class ConfigReader {
         if (initialized) return;
 
         try {
-            // Lee el ambiente desde el parámetro Maven o variable del sistema
             String environment = System.getProperty("environment", "qa").toLowerCase();
 
-            // Construye el nombre del archivo
             String fileName = "environment/" + environment + ".properties";
 
-            // Intenta cargar el archivo
             InputStream input = ConfigReader.class.getClassLoader().getResourceAsStream(fileName);
 
             if (input == null) {
                 throw new RuntimeException(
-                        "No se encontró el archivo de ambiente: " + fileName +
-                                "\nAsegúrate de que esté en src/test/resources/environment/"
+                        "No se encontró el archivo de ambiente: " + fileName
                 );
             }
 
-            // 4) Cargar properties
             properties.load(input);
             initialized = true;
 
@@ -37,9 +32,9 @@ public class ConfigReader {
         }
     }
 
+
     public static String get(String key) {
         if (!initialized) init();
-
         String value = properties.getProperty(key);
 
         if (value == null) {
@@ -50,7 +45,6 @@ public class ConfigReader {
     }
 
     public static String get(String key, String defaultValue) {
-        if (!initialized) init();
         return properties.getProperty(key, defaultValue);
     }
 }
