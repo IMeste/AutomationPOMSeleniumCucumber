@@ -9,7 +9,7 @@ Feature: Swag Labs Login Scenarios
     When Ingreso el usuario "standard_user"
     When Ingreso la clave "secret_sauce"
     When Click sobre el botón de login
-    Then Sistema redirecciona a la url "https://www.saucedemo.com/inventory.htmlp"
+    Then Sistema redirecciona a la url "https://www.saucedemo.com/inventory.html"
 
   @PrioridadBaja
   Scenario: Login fallido por usuario bloqueado
