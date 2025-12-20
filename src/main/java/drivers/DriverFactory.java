@@ -31,7 +31,11 @@ public class DriverFactory {
                 case "chromium":
                     ArrayList<String> optionListChromium = new ArrayList<>();
                     ChromeOptions optionsChromium = new ChromeOptions();
-                    if (headless) optionListChromium.add("--headless");
+                    if (headless) {
+                        optionListChromium.add("--headless=new");
+                        optionListChromium.add("--no-sandbox");
+                        optionListChromium.add("--disable-dev-shm-usage");
+                    }
                     optionListChromium.add("--start-maximized");
                     optionListChromium.add("--incognito");
                     optionsChromium.addArguments(optionListChromium);
@@ -41,7 +45,11 @@ public class DriverFactory {
                 case "chrome":
                     ArrayList<String> optionListChrome = new ArrayList<>();
                     ChromeOptions optionsChrome = new ChromeOptions();
-                    if (headless) optionListChrome.add("--headless");
+                    if (headless) {
+                        optionListChrome.add("--headless=new");
+                        optionListChrome.add("--no-sandbox");
+                        optionListChrome.add("--disable-dev-shm-usage");
+                    }
                     optionListChrome.add("--start-maximized");
                     optionListChrome.add("--incognito");
                     optionsChrome.addArguments(optionListChrome);
