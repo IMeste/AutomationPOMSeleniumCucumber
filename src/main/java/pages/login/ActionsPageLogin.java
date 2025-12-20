@@ -1,5 +1,6 @@
 package pages.login;
 
+import config.ConfigReader;
 import org.openqa.selenium.WebDriver;
 import drivers.DriverFactory;
 
@@ -27,5 +28,11 @@ public class ActionsPageLogin {
 
     public String getTextMessageError(){
         return elementsPageLogin.messageError.getText();
+    }
+
+    public void inicioSesionExitoso(){
+        elementsPageLogin.inputUsername.sendKeys(ConfigReader.get("usuario"));
+        elementsPageLogin.inputPassword.sendKeys(ConfigReader.get("clave"));
+        elementsPageLogin.buttonLogin.click();
     }
 }

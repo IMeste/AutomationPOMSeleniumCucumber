@@ -20,7 +20,11 @@ public class LoginSteps {
     @Given("Ingreso a la pagina de Swag Labs")
     public void ingreso_a_la_pagina_de_Swag_Labs() {
         actionsCommon.navigateTo(ConfigReader.get("base.url"));
+    }
 
+    @When("Inicio sesión exitoso")
+    public void inicio_sesion_exitoso(){
+        actionsPageLogin.inicioSesionExitoso();
     }
 
     @When("Ingreso el usuario {string}")
@@ -43,7 +47,6 @@ public class LoginSteps {
         String actualUrl = actionsCommon.getCurrentUrl();
         Assert.assertEquals("Urls do not match", expectedUrl, actualUrl);
     }
-
     @Then("Sistema responde el error {string}")
     public void sistema_responde_el_error(String error){
         Assert.assertEquals("Mensaje de error no coincide", error, actionsPageLogin.getTextMessageError());
