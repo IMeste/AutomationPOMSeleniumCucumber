@@ -3,6 +3,8 @@
 Este repositorio contiene un framework de automatización basado en Selenium, Cucumber y Page Object Model (POM).  
 Incluye manejo de ambientes dinámicos, configuración centralizada y ejecución simple desde consola o IDE.
 
+![CI](https://github.com/IMeste/AutomationPOMSeleniumCucumber/actions/workflows/ci.yml/badge.svg)
+
 ---
 
 ## ✨ Características principales
@@ -174,6 +176,16 @@ Abstracción de páginas para mantener el código limpio.
 
 - **Cucumber Report**
 - **Allure Report**
+
+---
+
+## 🔁 Integración Continua (CI)
+
+Este proyecto ejecuta automáticamente la totalidad de los tests
+mediante **GitHub Actions** en cada Pull Request hacia `develop` o `main`.
+
+- Si los tests fallan, el PR no puede ser mergeado.
+- Si los tests pasan, el merge queda habilitado.
 
 ---
 
