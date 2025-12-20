@@ -182,4 +182,6 @@ Abstracción de páginas para mantener el código limpio.
 Este repositorio utiliza tags para marcar cambios importantes:
 
 - `v0.1` → Versión inicial sin refactor completo.
-- `v0.2` → Refactor total + estructura profesional del framework.
+- `v0.2` → Refactor total + estructura del framework.
+- `v0.3` → Mejoras de configuración y documentación
+- `v0.4` → Refactor de steps
