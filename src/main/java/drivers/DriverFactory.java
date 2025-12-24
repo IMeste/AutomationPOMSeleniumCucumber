@@ -23,7 +23,9 @@ public class DriverFactory {
 
     public static void createDriver() {
         if (driver == null) {
-            String browser = ConfigReader.get("browser");
+            String browser = System.getProperty("browser") != null
+                    ? System.getProperty("browser")
+                    : ConfigReader.get("browser");
             boolean headless = Boolean.parseBoolean(ConfigReader.get("headless"));
             int timeout = Integer.parseInt(ConfigReader.get("timeout"));
 
