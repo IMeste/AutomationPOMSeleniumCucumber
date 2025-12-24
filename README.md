@@ -60,7 +60,7 @@ Para ejecutar este framework necesitas lo siguiente:
 - **Gradle** (incluido por defecto, no requerido para este proyecto)
 
 ### **Dependencias principales**
-*(Estas ya están en tu `pom.xml`, es solo informativo)*
+*(Estas ya están en el `pom.xml`, es solo informativo)*
 
 - Selenium WebDriver
 - Cucumber Java
@@ -71,33 +71,79 @@ Para ejecutar este framework necesitas lo siguiente:
 
 ## ▶️ Ejecución del proyecto
 
+### Valores por defecto
+
+Si no se especifican parámetros al ejecutar Maven:
+- **environment**: `qa`
+- **browser**: el definido en el archivo `properties`
+- Se ejecutan **todos los escenarios**
+- **No** se levanta Allure automáticamente
+
+------------------------------------------------------------------------
+
+### Ejecución básica
+
+    mvn test
+- Ejecuta todos los tests
+- No limpia resultados previos
+- No genera reporte de Allure
+
+
+    mvn clean verify
+- Limpia resultados previos
+- Ejecuta todos los tests
+- Genera resultados de Allure en la carpeta target/allure-results
+- Levanta el servidor de Allure, abriendo una pestaña en tu navegador con el reporte
+
+------------------------------------------------------------------------
+
 ### Ejecución por ambiente
-```
-# Al no ingresar -Denvironment, el ambiente por defecto es qa
-# Ejecuta todo y no levanta el reporte de Allure
-mvn test
 
-# Limpia los resultados previos de Allure, ejecuta todo y levanta el reporte de Allure con los resultados de la ejecución actual
-mvn clean verify
+    mvn test -Denvironment=desa
+    mvn clean verify -Denvironment=desa
 
-# Si quieres ejecutar las pruebas en un ambiente diferente a qa, ejecutarla de esta forma (No hay configurados ambientes apartes de qa)
-mvn test -Denvironment=desa
-mvn clean verify -Denvironment=desa
-```
+> Nota: actualmente solo existe configuración para `qa`.
+
+------------------------------------------------------------------------
 
 ### Ejecución por tag de Cucumber
-```
-# Al no ingresar -Denvironment, el ambiente por defecto es qa
-# Ejecuta todo y no levanta el reporte de Allure
-mvn test "-Dcucumber.filter.tags=@PrioridadAlta"
 
-# Limpia los resultados previos de Allure, ejecuta todo y levanta el reporte de Allure con los resultados de la ejecución actual
-mvn clean verify "-Dcucumber.filter.tags=@PrioridadAlta"
+    mvn test "-Dcucumber.filter.tags=@PrioridadAlta"
+    mvn clean verify "-Dcucumber.filter.tags=@PrioridadAlta"
 
-# Si quieres ejecutar las pruebas en un ambiente diferente a qa, ejecutarla de esta forma (No hay configurados ambientes apartes de qa)
-mvn test "-Dcucumber.filter.tags=@PrioridadAlta" -Denvironment=desa
-mvn clean verify "-Dcucumber.filter.tags=@PrioridadAlta" -Denvironment=desa
-```
+------------------------------------------------------------------------
+
+### Ejecución combinada (tag + ambiente)
+
+    mvn test "-Dcucumber.filter.tags=@PrioridadAlta" -Denvironment=desa
+    mvn clean verify "-Dcucumber.filter.tags=@PrioridadAlta" -Denvironment=desa
+
+------------------------------------------------------------------------
+
+### Ejecución indicando navegador
+
+El navegador puede enviarse como variable al ejecutar Maven.
+
+    mvn test -Dbrowser=firefox
+    mvn test "-Dcucumber.filter.tags=@PrioridadAlta" -Dbrowser=firefox
+    mvn clean verify "-Dcucumber.filter.tags=@PrioridadAlta" -Denvironment=qa -Dbrowser=chrome
+
+Navegadores soportados: - `chrome` - `firefox` - `chromium`
+
+------------------------------------------------------------------------
+
+### Reportes Allure
+
+    mvn allure:serve
+- Levanta un servidor local de Allure 
+- Utiliza los resultados existentes en target/allure-results
+
+
+    mvn allure:report
+- Genera un reporte estático en la carpeta target/site
+- El reporte puede abrirse directamente desde el archivo index.html
+- No requiere levantar un servidor Allure
+- Útil para compartir reportes y almacenarlos como artefactos
 
 ---
 
@@ -186,6 +232,7 @@ mediante **GitHub Actions** en cada Pull Request hacia `develop` o `main`.
 
 - Si los tests fallan, el PR no puede ser mergeado.
 - Si los tests pasan, el merge queda habilitado.
+- Se ejecutan los tests en múltiples navegadores mediante una matriz
 
 ---
 
