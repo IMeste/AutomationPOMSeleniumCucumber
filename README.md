@@ -88,7 +88,7 @@ Si no se especifican parámetros al ejecutar Maven:
 - No limpia resultados previos
 - No genera reporte de Allure
 
-
+---
     mvn clean verify
 - Limpia resultados previos
 - Ejecuta todos los tests
@@ -138,7 +138,7 @@ Navegadores soportados: - `chrome` - `firefox` - `chromium`
 - Levanta un servidor local de Allure 
 - Utiliza los resultados existentes en target/allure-results
 
-
+---
     mvn allure:report
 - Genera un reporte estático en la carpeta target/site
 - El reporte puede abrirse directamente desde el archivo index.html
