@@ -1,24 +1,21 @@
 package pages.inventory;
 
 import org.openqa.selenium.WebDriver;
-import drivers.DriverFactory;
 
 public class ActionsInventory {
 
-    private final WebDriver driver;
     private final ElementsInventory elementsInventory;
 
-    public ActionsInventory() {
-        driver = DriverFactory.getDriver();
-        elementsInventory = new ElementsInventory();
+    public ActionsInventory(WebDriver driver) {
+        elementsInventory = new ElementsInventory(driver);
     }
 
     public void addSauceLabsBackpack(){
-        elementsInventory.buttónAddSauceLabsBackpack.click();
+        elementsInventory.buttonAddSauceLabsBackpack.click();
     }
 
     public void addSauceLabsBikeLight(){
-        elementsInventory.buttónAddSauceLabsBikeLight.click();
+        elementsInventory.buttonAddSauceLabsBikeLight.click();
     }
 
     public void viewShoppingCart(){

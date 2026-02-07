@@ -1,9 +1,11 @@
 package steps;
 
 import config.ConfigReader;
+import drivers.DriverFactory;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.WebDriver;
 import pages.checkoutComplete.ActionsCheckoutComplete;
 import pages.checkoutStepOne.ActionsCheckoutStepOne;
 import pages.checkoutStepTwo.ActionsCheckoutStepTwo;
@@ -13,10 +15,11 @@ public class PagoSteps {
     private final ActionsCheckoutStepTwo actionsCheckoutStepTwo;
     private final ActionsCheckoutComplete actionsCheckoutComplete;
 
-    public PagoSteps(ActionsCheckoutStepOne actionsCheckoutStepOne, ActionsCheckoutStepTwo actionsCheckoutStepTwo, ActionsCheckoutComplete actionsCheckoutComplete){
-        this.actionsCheckoutStepOne = actionsCheckoutStepOne;
-        this.actionsCheckoutStepTwo = actionsCheckoutStepTwo;
-        this.actionsCheckoutComplete = actionsCheckoutComplete;
+    public PagoSteps(){
+        WebDriver driver = DriverFactory.getDriver();
+        this.actionsCheckoutStepOne = new ActionsCheckoutStepOne(driver);
+        this.actionsCheckoutStepTwo = new ActionsCheckoutStepTwo(driver);
+        this.actionsCheckoutComplete = new ActionsCheckoutComplete(driver);
     }
 
     @When("Realizo el pago")

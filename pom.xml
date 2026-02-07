@@ -22,7 +22,8 @@
         <cucumber.version>7.16.1</cucumber.version>
         <junit.version>4.13.2</junit.version>
         <allure.version>2.29.1</allure.version>
-
+        <maven.cucumber.reporting.version>5.8.1</maven.cucumber.reporting.version>
+        <allure.java.commons.version>2.24.0</allure.java.commons.version>
     </properties>
 
     <!-- ========================= -->
@@ -69,7 +70,7 @@
         <dependency>
             <groupId>net.masterthought</groupId>
             <artifactId>maven-cucumber-reporting</artifactId>
-            <version>5.8.1</version>
+            <version>${maven.cucumber.reporting.version}</version>
         </dependency>
 
         <!-- Allure -->
@@ -77,6 +78,13 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-cucumber7-jvm</artifactId>
             <version>${allure.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-java-commons</artifactId>
+            <version>${allure.java.commons.version}</version>
             <scope>test</scope>
         </dependency>
 
