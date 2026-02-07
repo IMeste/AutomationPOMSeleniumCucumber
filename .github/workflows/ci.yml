@@ -8,6 +8,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   tests:
@@ -48,6 +50,10 @@ jobs:
     needs: tests
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        browser: [chrome, firefox]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -58,30 +64,37 @@ jobs:
           distribution: 'corretto'
           java-version: '18'
 
-      - name: Download Allure results (Chrome)
+      - name: Download Allure results
         uses: actions/download-artifact@v4
         with:
-          name: allure-results-chrome
-          path: target/allure-results
-
-      - name: Download Allure results (Firefox)
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-results-firefox
+          name: allure-results-${{ matrix.browser }}
           path: target/allure-results
 
       - name: Generate Allure report
         run: mvn allure:report
 
-      - name: Upload Allure report
+      - name: Upload Allure site
         uses: actions/upload-artifact@v4
         with:
-          name: allure-report
+          name: allure-site-${{ matrix.browser }}
           path: target/site/allure-maven-plugin
 
-      - name: Publish Allure report to GitHub Pages
+  publish-pages:
+    needs: allure-generate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download all Allure sites
+        uses: actions/download-artifact@v4
+        with:
+          path: public
+
+      - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: target/site/allure-maven-plugin
+          publish_dir: public
           publish_branch: gh-pages

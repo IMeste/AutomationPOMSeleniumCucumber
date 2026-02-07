@@ -23,13 +23,10 @@ public class Hooks {
         if (injected) return;
         injected = true;
 
-        // Asocia el test a un navegador, para luego poder filtrar en el reporte de Allure
+        // Asocia el test a un navegador, el cual se visualizara en el nombre en el reporte de Allure
         Allure.getLifecycle().updateTestCase(tc ->
                 tc.setName(tc.getName() + " [" + DriverFactory.getBrowser() + "]")
         );
-
-        // Allure interprete que los test realizan flujos diferentes para no pisar navegadores
-        Allure.label("parentSuite", DriverFactory.getBrowser().toUpperCase());
     }
 
     @Before("@SetCookies")
