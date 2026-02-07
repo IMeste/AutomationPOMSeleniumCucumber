@@ -73,9 +73,6 @@ jobs:
       - name: Generate Allure report
         run: mvn allure:report
 
-      - name: Clean Allure results
-        run: rm -rf target/allure-results
-
       - name: Upload Allure site
         uses: actions/upload-artifact@v4
         with:
