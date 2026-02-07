@@ -80,7 +80,7 @@ jobs:
           path: target/site/allure-maven-plugin
 
   publish-pages:
-    needs: allure-generate
+    needs: allure-report
     runs-on: ubuntu-latest
 
     steps:
