@@ -1,7 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Sat Feb 07 17:52:41 UTC 2026","Sat Feb 07 17:52:44 UTC 2026","3604","FIREFOX","Swag Labs Login Scenarios","","Login fallido por usuario incorrecto","","Login fallido por usuario incorrecto [firefox]",""
-"passed","Sat Feb 07 17:52:34 UTC 2026","Sat Feb 07 17:52:37 UTC 2026","3588","FIREFOX","Swag Labs Login Scenarios","","Login Exitoso","","Login Exitoso [firefox]",""
-"passed","Sat Feb 07 17:52:44 UTC 2026","Sat Feb 07 17:52:48 UTC 2026","3456","FIREFOX","Swag Labs Login Scenarios","","Login fallido por clave incorrecta","","Login fallido por clave incorrecta [firefox]",""
-"passed","Sat Feb 07 17:52:37 UTC 2026","Sat Feb 07 17:52:41 UTC 2026","3632","FIREFOX","Swag Labs Login Scenarios","","Login fallido por usuario bloqueado","","Login fallido por usuario bloqueado [firefox]",""
-"passed","Sat Feb 07 17:52:13 UTC 2026","Sat Feb 07 17:52:24 UTC 2026","10536","CHROME","Swag Labs Payments Scenarios","","Pagar dos productos","","Pagar dos productos [chrome]",""
-"passed","Sat Feb 07 17:52:29 UTC 2026","Sat Feb 07 17:52:34 UTC 2026","4567","FIREFOX","Swag Labs Cart Scenarios","","Añadir producto al carro","","Añadir producto al carro [firefox]",""
