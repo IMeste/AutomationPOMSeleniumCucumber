@@ -27,6 +27,9 @@ public class Hooks {
         Allure.getLifecycle().updateTestCase(tc ->
                 tc.setName(tc.getName() + " [" + DriverFactory.getBrowser() + "]")
         );
+
+        // Allure interprete que los test realizan flujos diferentes para no pisar navegadores
+        Allure.label("parentSuite", DriverFactory.getBrowser().toUpperCase());
     }
 
     @Before("@SetCookies")
