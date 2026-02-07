@@ -73,6 +73,9 @@ jobs:
       - name: Generate Allure report
         run: mvn allure:report
 
+      - name: Clean Allure results
+        run: rm -rf target/allure-results
+
       - name: Upload Allure site
         uses: actions/upload-artifact@v4
         with:
@@ -91,6 +94,29 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: public
+
+      - name: Create root index.html
+        run: |
+          cat <<EOF > public/index.html
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <title>Allure Reports</title>
+            <style>
+              body { font-family: Arial; padding: 40px; }
+              ul { font-size: 18px; }
+            </style>
+          </head>
+          <body>
+            <h1>Automation Test Reports</h1>
+            <ul>
+              <li><a href="./allure-site-chrome/">Chrome Report</a></li>
+              <li><a href="./allure-site-firefox/">Firefox Report</a></li>
+            </ul>
+          </body>
+          </html>
+          EOF
 
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
