@@ -1,16 +1,13 @@
 package pages.cart;
 
-import drivers.DriverFactory;
 import org.openqa.selenium.WebDriver;
 
 public class ActionsCart {
 
-    private final WebDriver driver;
     private final ElementsCart elementsCart;
 
-    public ActionsCart() {
-        driver = DriverFactory.getDriver();
-        elementsCart = new ElementsCart();
+    public ActionsCart(WebDriver driver) {
+        elementsCart = new ElementsCart(driver);
     }
 
     public void clickCheckout(){

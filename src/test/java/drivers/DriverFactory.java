@@ -13,6 +13,8 @@ import java.util.ArrayList;
 public class DriverFactory {
 
     private static WebDriver driver;
+    private static String browser;
+
 
     public static WebDriver getDriver() {
         if (driver == null) {
@@ -23,9 +25,7 @@ public class DriverFactory {
 
     public static void createDriver() {
         if (driver == null) {
-            String browser = System.getProperty("browser") != null
-                    ? System.getProperty("browser")
-                    : ConfigReader.get("browser");
+            setBrowser();
             boolean headless = Boolean.parseBoolean(ConfigReader.get("headless"));
             int timeout = Integer.parseInt(ConfigReader.get("timeout"));
 
@@ -78,5 +78,15 @@ public class DriverFactory {
             driver.quit();
             driver = null;
         }
+    }
+
+    public static void setBrowser(){
+        browser = System.getProperty("browser") != null
+                ? System.getProperty("browser")
+                : ConfigReader.get("browser");
+    }
+
+    public static String getBrowser() {
+        return browser;
     }
 }
