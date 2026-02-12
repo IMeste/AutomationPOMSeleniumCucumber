@@ -1,6 +1,8 @@
 package steps;
 
 import config.ConfigReader;
+import drivers.DriverFactory;
+import org.openqa.selenium.WebDriver;
 import support.ActionsCommon;
 import pages.login.ActionsPageLogin;
 import io.cucumber.java.en.Given;
@@ -9,12 +11,14 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 
 public class LoginSteps {
+
     private final ActionsCommon actionsCommon;
     private final ActionsPageLogin actionsPageLogin;
 
-    public LoginSteps(ActionsCommon actionsCommon, ActionsPageLogin actionsPageLogin) {
+    public LoginSteps(ActionsCommon actionsCommon) {
+        WebDriver driver = DriverFactory.getDriver();
+        this.actionsPageLogin = new ActionsPageLogin(driver);
         this.actionsCommon = actionsCommon;
-        this.actionsPageLogin = actionsPageLogin;
     }
 
     @Given("Ingreso a la pagina de Swag Labs")

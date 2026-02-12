@@ -6,6 +6,11 @@ on:
       - develop
       - main
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -40,3 +45,79 @@ jobs:
         with:
           name: allure-results-${{ matrix.browser }}
           path: target/allure-results
+
+  allure-report:
+    needs: tests
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        browser: [chrome, firefox]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 18
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '18'
+
+      - name: Download Allure results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results-${{ matrix.browser }}
+          path: target/allure-results
+
+      - name: Generate Allure report
+        run: mvn allure:report
+
+      - name: Upload Allure site
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-site-${{ matrix.browser }}
+          path: target/site/allure-maven-plugin
+
+  publish-pages:
+    needs: allure-report
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download all Allure sites
+        uses: actions/download-artifact@v4
+        with:
+          path: public
+
+      - name: Create root index.html
+        run: |
+          cat <<EOF > public/index.html
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <title>Allure Reports</title>
+            <style>
+              body { font-family: Arial; padding: 40px; }
+              ul { font-size: 18px; }
+            </style>
+          </head>
+          <body>
+            <h1>Automation Test Reports</h1>
+            <ul>
+              <li><a href="./allure-site-chrome/">Chrome Report</a></li>
+              <li><a href="./allure-site-firefox/">Firefox Report</a></li>
+            </ul>
+          </body>
+          </html>
+          EOF
+
+      - name: Publish to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: public
+          publish_branch: gh-pages

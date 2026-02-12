@@ -1,15 +1,13 @@
 package pages.checkoutStepOne;
 
-import drivers.DriverFactory;
 import org.openqa.selenium.WebDriver;
 
 public class ActionsCheckoutStepOne {
-    private final WebDriver driver;
+
     private final ElementsCheckoutStepOne elementsCheckoutStepOne;
 
-    public ActionsCheckoutStepOne() {
-        driver = DriverFactory.getDriver();
-        elementsCheckoutStepOne = new ElementsCheckoutStepOne();
+    public ActionsCheckoutStepOne(WebDriver driver) {
+        elementsCheckoutStepOne = new ElementsCheckoutStepOne(driver);
     }
 
     public void sendFirstName(String firstName){
