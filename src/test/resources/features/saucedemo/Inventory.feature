@@ -5,7 +5,7 @@ Feature: Swag Labs Cart Scenarios
     Given Ingreso a la pagina de Swag Labs
     When Ingreso el usuario "standard_user"
     When Ingreso la clave "secret_sauce"
-    When Click sobre el botón de login
+    When Click sobre el botón de login con credenciales validas
 
   @PrioridadAlta
   Scenario: Añadir producto al carro

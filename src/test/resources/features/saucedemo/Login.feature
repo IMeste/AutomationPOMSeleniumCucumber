@@ -8,7 +8,7 @@ Feature: Swag Labs Login Scenarios
   Scenario: Login Exitoso
     When Ingreso el usuario "standard_user"
     When Ingreso la clave "secret_sauce"
-    When Click sobre el botón de login
+    When Click sobre el botón de login con credenciales validas
     Then Sistema redirecciona a la url "https://www.saucedemo.com/inventory.html"
 
   @PrioridadBaja
