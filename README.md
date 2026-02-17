@@ -26,11 +26,11 @@ Incluye manejo de ambientes dinámicos, configuración centralizada y ejecución
   /main
     /java
       /config
-      /drivers
       /pages
       /utils
   /test
     /java
+      /drivers
       /hooks
       /runners
       /steps
@@ -244,3 +244,4 @@ Este repositorio utiliza tags para marcar cambios importantes:
 - `v0.2` → Refactor total + estructura del framework.
 - `v0.3` → Mejoras de configuración y documentación
 - `v0.4` → Refactor de steps
+- `v0.5` → Centralización de acciones y validaciones del framework
