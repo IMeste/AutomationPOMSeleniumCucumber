@@ -36,8 +36,21 @@ jobs:
           key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
           restore-keys: maven-
 
+      - name: Decide Cucumber tags
+        id: tags
+        shell: bash
+        run: |
+          if [ "${{ github.base_ref }}" = "develop" ]; then
+            echo 'filter=@pr and not (@wip or @flaky)' >> $GITHUB_OUTPUT
+          elif [ "${{ github.base_ref }}" = "main" ]; then
+            echo 'filter=@release and not (@wip or @flaky)' >> $GITHUB_OUTPUT
+          else
+            echo "Unsupported base branch: ${{ github.base_ref }}"
+            exit 1
+          fi
+
       - name: Run tests
-        run: mvn clean test -Denvironment=qa -Dbrowser=${{ matrix.browser }}
+        run: mvn clean test -Denvironment=qa -Dbrowser=${{ matrix.browser }} -Dcucumber.filter.tags="${{ steps.tags.outputs.filter }}"
 
       - name: Upload Allure results
         if: always()
