@@ -5,7 +5,7 @@ Feature: Swag Labs Payments Scenarios
     Given Ingreso a la pagina de Swag Labs
     When Inicio sesión exitoso
 
-  @PrioridadAlta
+  @smoke @release @critical
   Scenario: Pagar dos productos
     When Genero el carro con 2 productos
     And Ingreso datos de usuario en el checkout

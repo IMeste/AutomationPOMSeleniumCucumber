@@ -132,6 +132,22 @@ Navegadores soportados: - `chrome` - `firefox` - `chromium`
 
 ------------------------------------------------------------------------
 
+### Ejecución local
+
+Simular PR → develop (suite `@pr`)
+
+    mvn clean test -Denvironment=qa -Dbrowser=chrome "-Dcucumber.filter.tags=@pr and not (@wip or @flaky)"
+
+Simular PR → main (suite `@release`)
+
+    mvn clean test -Denvironment=qa -Dbrowser=chrome "-Dcucumber.filter.tags=@release and not (@wip or @flaky)"
+
+Ejecuta toda la suite (excluye `@wip` y `@flaky`)
+
+    mvn clean test -Denvironment=qa -Dbrowser=chrome "-Dcucumber.filter.tags=not (@wip or @flaky)"
+
+------------------------------------------------------------------------
+
 ### Reportes Allure
 
     mvn allure:serve
@@ -233,6 +249,10 @@ mediante **GitHub Actions** en cada Pull Request hacia `develop` o `main`.
 - Si los tests fallan, el PR no puede ser mergeado.
 - Si los tests pasan, el merge queda habilitado.
 - Se ejecutan los tests en múltiples navegadores mediante una matriz
+
+
+- PR hacia `develop`: ejecuta escenarios con `@pr` (excluye `@wip` y `@flaky`)
+- PR hacia `main`: ejecuta escenarios con `@release` (excluye `@wip` y `@flaky`)
 
 ---
 
