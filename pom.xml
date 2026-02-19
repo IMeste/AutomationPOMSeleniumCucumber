@@ -16,6 +16,8 @@
     <!-- ========================= -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>18</maven.compiler.source>
+        <maven.compiler.target>18</maven.compiler.target>
 
         <!-- Versiones centralizadas -->
         <selenium.version>4.25.0</selenium.version>
@@ -24,6 +26,8 @@
         <allure.version>2.29.1</allure.version>
         <maven.cucumber.reporting.version>5.8.1</maven.cucumber.reporting.version>
         <allure.java.commons.version>2.24.0</allure.java.commons.version>
+        <slf4j.api.version>2.0.12</slf4j.api.version>
+        <logback.classic.version>1.5.6</logback.classic.version>
     </properties>
 
     <!-- ========================= -->
@@ -86,6 +90,19 @@
             <artifactId>allure-java-commons</artifactId>
             <version>${allure.java.commons.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.classic.version}</version>
         </dependency>
 
     </dependencies>
