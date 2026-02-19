@@ -1,1 +1,1 @@
-{"total":2,"items":[{"uid":"16db9472976472049fdc9ce1fc1d7525","name":"Swag Labs Login Scenarios","statistic":{"failed":0,"broken":0,"skipped":0,"passed":4,"unknown":0,"total":4}},{"uid":"93f0e8e95ead84f1335c952806292cbb","name":"Swag Labs Cart Scenarios","statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1}}]}
+{"total":1,"items":[{"uid":"7a1678487faed85e328ab15f1f5cfa4e","name":"Swag Labs Payments Scenarios","statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1}}]}
