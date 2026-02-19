@@ -5,7 +5,10 @@ import config.EnvironmentManager;
 import drivers.DriverFactory;
 import io.cucumber.java.*;
 import io.qameta.allure.Allure;
+import io.qameta.allure.model.Parameter;
 import support.ScreenshotHelper;
+
+import java.util.ArrayList;
 
 public class Hooks {
 
@@ -19,14 +22,21 @@ public class Hooks {
     }
 
     @BeforeStep(order = 0)
-    public void addBrowserOnce() {
+    public void addBrowserParameterOnce() {
         if (injected) return;
         injected = true;
 
-        // Asocia el test a un navegador, el cual se visualizara en el nombre en el reporte de Allure
-        Allure.getLifecycle().updateTestCase(tc ->
-                tc.setName(tc.getName() + " [" + DriverFactory.getBrowser() + "]")
-        );
+        Allure.getLifecycle().updateTestCase(tc -> {
+            if (tc.getParameters() == null) {
+                tc.setParameters(new ArrayList<>());
+            } else {
+                tc.setParameters(new ArrayList<>(tc.getParameters()));
+            }
+
+            tc.getParameters().add(new Parameter()
+                    .setName("browser")
+                    .setValue(DriverFactory.getBrowser()));
+        });
     }
 
     @Before("@SetCookies")

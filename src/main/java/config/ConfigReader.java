@@ -1,5 +1,8 @@
 package config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -7,6 +10,7 @@ public class ConfigReader {
 
     private static final Properties properties = new Properties();
     private static boolean initialized = false;
+    private static final Logger log = LoggerFactory.getLogger(ConfigReader.class);
 
     public static void init() {
         if (initialized) return;
@@ -27,11 +31,12 @@ public class ConfigReader {
             properties.load(input);
             initialized = true;
 
+            log.info("ConfigReader cargado correctamente para el ambiente {}",
+                    environment);
         } catch (Exception e) {
             throw new RuntimeException("Error cargando configuración: " + e.getMessage(), e);
         }
     }
-
 
     public static String get(String key) {
         if (!initialized) init();

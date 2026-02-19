@@ -1,20 +1,22 @@
 package drivers;
 
 import config.ConfigReader;
+import enums.BrowserType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.time.Duration;
 import java.util.ArrayList;
 
 public class DriverFactory {
 
     private static WebDriver driver;
-    private static String browser;
-
+    private static BrowserType browser;
+    private static final Logger log = LoggerFactory.getLogger(DriverFactory.class);
 
     public static WebDriver getDriver() {
         if (driver == null) {
@@ -25,47 +27,16 @@ public class DriverFactory {
 
     public static void createDriver() {
         if (driver == null) {
-            setBrowser();
             boolean headless = Boolean.parseBoolean(ConfigReader.get("headless"));
             int timeout = Integer.parseInt(ConfigReader.get("timeout"));
+            browser = BrowserType.from(System.getProperty("browser", ConfigReader.get("browser")));
+
+            log.info("Inicializando WebDriver | browser={} | headless={} | timeout={}s",
+                    browser.name().toLowerCase(), headless, timeout);
 
             switch (browser) {
-                case "chromium":
-                    ArrayList<String> optionListChromium = new ArrayList<>();
-                    ChromeOptions optionsChromium = new ChromeOptions();
-                    if (headless) {
-                        optionListChromium.add("--headless=new");
-                        optionListChromium.add("--no-sandbox");
-                        optionListChromium.add("--disable-dev-shm-usage");
-                    }
-                    optionListChromium.add("--start-maximized");
-                    optionListChromium.add("--incognito");
-                    optionsChromium.addArguments(optionListChromium);
-                    driver = new ChromeDriver(optionsChromium);
-                    break;
-
-                case "chrome":
-                    ArrayList<String> optionListChrome = new ArrayList<>();
-                    ChromeOptions optionsChrome = new ChromeOptions();
-                    if (headless) {
-                        optionListChrome.add("--headless=new");
-                        optionListChrome.add("--no-sandbox");
-                        optionListChrome.add("--disable-dev-shm-usage");
-                    }
-                    optionListChrome.add("--start-maximized");
-                    optionListChrome.add("--incognito");
-                    optionsChrome.addArguments(optionListChrome);
-                    driver = new ChromeDriver(optionsChrome);
-                    break;
-
-                case "firefox":
-                    FirefoxOptions firefoxOptions = new FirefoxOptions();
-                    if (headless) firefoxOptions.addArguments("--headless");
-                    driver = new FirefoxDriver(firefoxOptions);
-                    break;
-
-                default:
-                    throw new RuntimeException("Navegador no soportado: " + browser);
+                case CHROME -> driver = new ChromeDriver(buildChromeOptions(headless));
+                case FIREFOX -> driver = new FirefoxDriver(buildFirefoxOptions(headless));
             }
 
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeout));
@@ -75,18 +46,33 @@ public class DriverFactory {
 
     public static void quitDriver() {
         if (driver != null) {
+            log.info("Cerrando WebDriver | browser={}", getBrowser());
             driver.quit();
             driver = null;
         }
     }
 
-    public static void setBrowser(){
-        browser = System.getProperty("browser") != null
-                ? System.getProperty("browser")
-                : ConfigReader.get("browser");
+    public static ChromeOptions buildChromeOptions(boolean headless){
+        ArrayList<String> optionListChrome = new ArrayList<>();
+        ChromeOptions optionsChrome = new ChromeOptions();
+        if (headless) {
+            optionListChrome.add("--headless=new");
+            optionListChrome.add("--no-sandbox");
+            optionListChrome.add("--disable-dev-shm-usage");
+        }
+        optionListChrome.add("--start-maximized");
+        optionListChrome.add("--incognito");
+        optionsChrome.addArguments(optionListChrome);
+        return optionsChrome;
+    }
+
+    public static FirefoxOptions buildFirefoxOptions(boolean headless){
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        if (headless) firefoxOptions.addArguments("--headless");
+        return firefoxOptions;
     }
 
     public static String getBrowser() {
-        return browser;
+        return browser.name().toLowerCase();
     }
 }

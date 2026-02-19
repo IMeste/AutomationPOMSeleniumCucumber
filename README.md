@@ -31,6 +31,7 @@ Incluye manejo de ambientes dinámicos, configuración centralizada y ejecución
   /test
     /java
       /drivers
+      /enums
       /hooks
       /runners
       /steps
@@ -128,7 +129,7 @@ El navegador puede enviarse como variable al ejecutar Maven.
     mvn test "-Dcucumber.filter.tags=@PrioridadAlta" -Dbrowser=firefox
     mvn clean verify "-Dcucumber.filter.tags=@PrioridadAlta" -Denvironment=qa -Dbrowser=chrome
 
-Navegadores soportados: - `chrome` - `firefox` - `chromium`
+Navegadores soportados: - `chrome` - `firefox`
 
 ------------------------------------------------------------------------
 
@@ -186,7 +187,7 @@ El archivo `properties` permite configurar el comportamiento de la aplicación c
 | Campo | Descripción | Valores posibles | Valor por defecto |
 |-------|-------------|------------------|-------------------|
 | `base.url` | Define la URL base de la web | Cualquier URL válida | `https://www.saucedemo.com` |
-| `browser` | Define el navegador a utilizar | `chrome` - Navegador Chrome<br>`chromium` - Navegador Chromium<br>`firefox` - Navegador Firefox | `chrome` |
+| `browser` | Define el navegador a utilizar | `chrome` - Navegador Chrome<br>`firefox` - Navegador Firefox | `chrome` |
 | `take.screenshot` | Define cuándo tomar capturas de pantalla | `all` - En todos los pasos<br>`failed` - Solo si el escenario falla<br>`none` - No tomar capturas | `all` |
 | `timeout` | Define el tiempo de espera en segundos | Número entero positivo | `10` |
 | `headless` | Define si se ejecuta sin interfaz gráfica | `true` - No se levanta el navegador (headless)<br>`false` - Si se levanta el navegador | `true` |
@@ -198,7 +199,6 @@ base.url=https://www.saucedemo.com
 
 # Define el navegador a utilizar
 #  - chrome         ? navegador Chrome
-#  - chromium       ? navegador Chromium
 #  - firefox        ? navegador Firefox
 browser=chrome
 
