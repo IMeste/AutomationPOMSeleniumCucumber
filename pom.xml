@@ -137,7 +137,7 @@
                         <allure.results.directory>target/allure-results</allure.results.directory>
                     </systemPropertyVariables>
                     <includes>
-                        <include>**/TestRunner.java</include>
+                        <include>**/runners/**/*Runner.java</include>
                     </includes>
                     <testFailureIgnore>false</testFailureIgnore>
 
