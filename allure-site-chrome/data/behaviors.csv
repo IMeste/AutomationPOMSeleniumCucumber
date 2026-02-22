@@ -1,2 +1,7 @@
 "Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
-"","Swag Labs Payments Scenarios","Pagar dos productos","0","0","1","0","0"
+"","Swag Labs Cart Scenarios","Añadir producto al carro","0","0","1","0","0"
+"","Swag Labs Login Scenarios","Login Exitoso","0","0","1","0","0"
+"","Flujo Login Marmelab","Login exitoso en React Admin Demo","0","0","1","0","0"
+"","Swag Labs Login Scenarios","Login fallido por clave incorrecta","0","0","1","0","0"
+"","Swag Labs Login Scenarios","Login fallido por usuario bloqueado","0","0","1","0","0"
+"","Swag Labs Login Scenarios","Login fallido por usuario incorrecto","0","0","1","0","0"
