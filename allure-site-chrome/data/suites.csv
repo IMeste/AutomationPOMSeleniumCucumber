@@ -1,7 +1,2 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Thu Feb 26 00:45:22 UTC 2026","Thu Feb 26 00:45:24 UTC 2026","1124","","Swag Labs Login Scenarios","","Login fallido por usuario incorrecto","","Login fallido por usuario incorrecto",""
-"passed","Thu Feb 26 00:45:20 UTC 2026","Thu Feb 26 00:45:21 UTC 2026","1169","","Swag Labs Login Scenarios","","Login Exitoso","","Login Exitoso",""
-"passed","Thu Feb 26 00:44:56 UTC 2026","Thu Feb 26 00:45:18 UTC 2026","22043","","Flujo Login Marmelab","","Login exitoso en React Admin Demo","","Login exitoso en React Admin Demo",""
-"passed","Thu Feb 26 00:45:24 UTC 2026","Thu Feb 26 00:45:25 UTC 2026","1126","","Swag Labs Login Scenarios","","Login fallido por clave incorrecta","","Login fallido por clave incorrecta",""
-"passed","Thu Feb 26 00:45:18 UTC 2026","Thu Feb 26 00:45:20 UTC 2026","1925","","Swag Labs Cart Scenarios","","Añadir producto al carro","","Añadir producto al carro",""
-"passed","Thu Feb 26 00:45:21 UTC 2026","Thu Feb 26 00:45:22 UTC 2026","1120","","Swag Labs Login Scenarios","","Login fallido por usuario bloqueado","","Login fallido por usuario bloqueado",""
+"passed","Thu Feb 26 00:48:07 UTC 2026","Thu Feb 26 00:48:12 UTC 2026","5385","","Swag Labs Payments Scenarios","","Pagar dos productos","","Pagar dos productos",""
