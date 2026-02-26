@@ -256,12 +256,104 @@ mediante **GitHub Actions** en cada Pull Request hacia `develop` o `main`.
 
 ---
 
-## 📌 Versionado
+## 📦 Estrategia de Versionado
 
-Este repositorio utiliza tags para marcar cambios importantes:
+Este proyecto utiliza versionado semántico extendido:
 
-- `v0.1` → Versión inicial sin refactor completo.
-- `v0.2` → Refactor total + estructura del framework.
-- `v0.3` → Mejoras de configuración y documentación
-- `v0.4` → Refactor de steps
-- `v0.5` → Centralización de acciones y validaciones del framework
+X.Y.Z
+
+Donde:
+
+### 🔴 X — Cambios estructurales (breaking)
+
+Se incrementa cuando hay cambios que modifican la arquitectura del framework, por ejemplo:
+
+- refactor grande del core
+- cambio en DriverFactory
+- cambio de runner
+- cambios que rompen compatibilidad
+
+Ejemplo:
+1.0.0 → 2.0.0
+
+---
+
+### 🟡 Y — Mejoras del framework (non-breaking)
+
+Se incrementa cuando se agregan o mejoran capacidades del framework sin romper lo existente:
+
+- retry controlado
+- mejoras de CI
+- logging
+- helpers
+- análisis estático
+
+Ejemplo:
+1.0.0 → 1.1.0
+
+---
+
+### 🟢 Z — Automatizaciones y correcciones
+
+Se incrementa cuando:
+
+- se agregan nuevos flujos o escenarios
+- se automatizan nuevas páginas
+- se corrigen bugs (independiente de su gravedad)
+
+Ejemplos:
+1.0.0 → 1.0.1
+1.1.0 → 1.1.1
+2.0.0 → 2.0.1
+
+---
+
+### 🧠 Regla clave
+
+Las correcciones siempre incrementan Z, sin importar si el bug proviene de X o Y.
+
+La versión solo cambia en X o Y cuando se agrega o modifica funcionalidad/estructura, no por fixes.
+
+---
+
+### 🏷️ Releases
+
+Las versiones oficiales del proyecto se gestionan mediante git tags aplicados sobre main.
+
+- main representa el estado estable del framework.
+- Cada tag (vX.Y.Z) marca una versión liberada.
+
+Ejemplo:
+
+v1.0.0 → Framework base estable
+
+El número de versión en pom.xml es informativo; la versión real del proyecto está definida por el tag.
+
+---
+
+## 🚀 Roadmap
+
+### v1.0.1 — Expansión de cobertura funcional
+
+- CRUD completo en React Admin (Customers)
+- Validaciones avanzadas de formularios
+- Flujos extendidos Create / Update / Delete
+
+---
+
+### v1.1.0 — Mejoras del framework
+
+- Retry controlado por escenario
+- Análisis estático del código (Checkstyle / PMD)
+
+---
+
+### v1.2.0 — Robustez técnica
+
+- Smoke test técnico con HTML estático (health check del framework)
+
+---
+
+### v2.0.0 — Cambios estructurales
+
+- Paralelización real a nivel framework (ThreadLocal WebDriver)
