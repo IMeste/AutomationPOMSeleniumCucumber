@@ -59,8 +59,10 @@ public class DriverFactory {
             optionListChrome.add("--headless=new");
             optionListChrome.add("--no-sandbox");
             optionListChrome.add("--disable-dev-shm-usage");
+            optionListChrome.add("--window-size=1920,1080");
+        } else {
+            optionListChrome.add("--start-maximized");
         }
-        optionListChrome.add("--start-maximized");
         optionListChrome.add("--incognito");
         optionsChrome.addArguments(optionListChrome);
         return optionsChrome;
@@ -68,7 +70,19 @@ public class DriverFactory {
 
     public static FirefoxOptions buildFirefoxOptions(boolean headless){
         FirefoxOptions firefoxOptions = new FirefoxOptions();
-        if (headless) firefoxOptions.addArguments("--headless");
+        if (headless) {
+            firefoxOptions.addArguments("--headless");
+            firefoxOptions.addArguments("--width=1920");
+            firefoxOptions.addArguments("--height=1080");
+        } else {
+            firefoxOptions.addArguments("--start-maximized");
+        }
+
+        // Preferencias para estabilidad
+        firefoxOptions.addPreference("dom.webnotifications.enabled", false); // bloquea popups de notificaciones
+        firefoxOptions.addPreference("geo.enabled", false);                  // bloquea popups de geolocalización
+        firefoxOptions.addPreference("media.volume_scale", "0.0");           // silencia audio
+
         return firefoxOptions;
     }
 
