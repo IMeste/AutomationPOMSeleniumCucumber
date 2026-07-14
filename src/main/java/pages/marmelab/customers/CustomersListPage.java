@@ -14,6 +14,7 @@ public class CustomersListPage extends BasePage {
     private final By emptyState = By.cssSelector("p[class='MuiTypography-root MuiTypography-body2 css-bxmwoh']");
     private final By tableHead = By.cssSelector(".MuiTableHead-root.RaDataTable-thead");
     private final By tableBody = By.cssSelector("tbody.MuiTableBody-root.RaDataTable-tbody");
+    private final By buttonDelete = By.cssSelector("button[aria-label='Delete']");
 
     private final TableReader tableReader;
 
@@ -55,7 +56,19 @@ public class CustomersListPage extends BasePage {
     }
 
     public void pressEnter(){
-        pressKey(inputSearch, Keys.ENTER, "Press Enter in Search");
+        pressKeyInElement(inputSearch, Keys.ENTER, "Press Enter in Search");
+    }
+
+    public void editCustomer(int index){
+        tableReader.clickBodyCell(tableBody, index, 1);
+    }
+
+    public void selectCustomer(int index){
+        tableReader.clickBodyCell(tableBody, index, 0);
+    }
+
+    public void clickDeleteCustomer(){
+        click(buttonDelete, "Botón Delete Customer");
     }
 
 }

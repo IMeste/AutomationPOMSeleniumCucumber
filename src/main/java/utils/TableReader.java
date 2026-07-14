@@ -11,11 +11,9 @@ import java.util.List;
 
 public class TableReader {
 
-    private final WebDriver driver;
     private final WebDriverWait wait;
 
     public TableReader(WebDriver driver) {
-        this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
@@ -102,6 +100,48 @@ public class TableReader {
             }
 
             return extractCellValue(cells.get(columnIndex));
+
+        } catch (IndexOutOfBoundsException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new AssertionError(
+                    String.format("[ACTION FAILED] Element: %s | Locator: %s | Action: %s | Error: %s",
+                            elementName, tableBodyLocator, action, e.getClass().getSimpleName()),
+                    e
+            );
+        }
+    }
+
+    /**
+     * Hace click en una celda del body, dado fila y columna.
+     * @param tableBodyLocator Locator que apunta al tbody
+     * @param rowIndex Posición fila 0-based
+     * @param columnIndex Posición columna 0-based
+     */
+    public void clickBodyCell(By tableBodyLocator, int rowIndex, int columnIndex) {
+        final String elementName = "tableBody";
+        final String action = "click body cell";
+
+        try {
+            WebElement tbody = wait.until(ExpectedConditions.presenceOfElementLocated(tableBodyLocator));
+
+            List<WebElement> rows = tbody.findElements(By.tagName("tr"));
+
+            if (rowIndex < 0 || rowIndex >= rows.size()) {
+                throw new IndexOutOfBoundsException(
+                        String.format("Row index out of range. index=%d size=%d", rowIndex, rows.size())
+                );
+            }
+
+            List<WebElement> cells = rows.get(rowIndex).findElements(By.tagName("td"));
+
+            if (columnIndex < 0 || columnIndex >= cells.size()) {
+                throw new IndexOutOfBoundsException(
+                        String.format("Column index out of range. index=%d size=%d", columnIndex, cells.size())
+                );
+            }
+
+            cells.get(columnIndex).click();
 
         } catch (IndexOutOfBoundsException e) {
             throw e;

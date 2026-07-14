@@ -1,11 +1,12 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ import java.util.List;
 public abstract class BasePage {
 
     protected WebDriver driver;
+    public final WebDriverWait wait;
 
     /**
      * Constructor de la clase BasePage.
@@ -23,6 +25,7 @@ public abstract class BasePage {
      */
     protected BasePage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     /**
@@ -176,7 +179,7 @@ public abstract class BasePage {
      * @param elementName Nombre descriptivo del elemento (para mensajes de error).
      * @throws AssertionError si ocurre algún error al presionar la tecla.
      */
-    protected void pressKey(By locator, Keys key, String elementName) {
+    protected void pressKeyInElement(By locator, Keys key, String elementName) {
         try {
             WebElement element = driver.findElement(locator);
             element.sendKeys(key);
@@ -186,6 +189,77 @@ public abstract class BasePage {
                     elementName,
                     locator,
                     key.name(),
+                    e.getClass().getSimpleName()
+            ), e);
+        }
+    }
+
+    /**
+     * Presiona una tecla específica en general.
+     *
+     * @param key Tecla a presionar (ejemplo: Keys.ENTER, Keys.TAB, etc.).
+     * @throws AssertionError si ocurre algún error al presionar la tecla.
+     */
+    protected void pressKeyGeneric(Keys key) {
+        try {
+            Actions actions = new Actions(driver);
+            actions.sendKeys(key).perform();
+        } catch (Exception e) {
+            throw new AssertionError(String.format(
+                    "[ACTION FAILED] Action: pressKey | Key: %s | Error: %s",
+                    key.name(),
+                    e.getClass().getSimpleName()
+            ), e);
+        }
+    }
+
+    /**
+     * Selecciona una opción en un componente Select personalizado de React/MUI
+     * haciendo click en el dropdown y luego en la opción que coincida con el texto indicado.
+     *
+     * @param dropdownLocator Localizador del componente Select de React (el div que abre el menú).
+     * @param optionText      Texto visible de la opción a seleccionar.
+     * @param elementName     Nombre descriptivo del elemento (para mensajes de error).
+     * @throws AssertionError si el dropdown no abre, la opción no existe, o ocurre cualquier error durante la acción.
+     */
+    protected void selectReactOptionByText(By dropdownLocator, String optionText, String elementName) {
+        try {
+            // Espera a que el dropdown sea clickeable y lo abre
+            WebElement dropdown = wait.until(
+                    ExpectedConditions.elementToBeClickable(dropdownLocator)
+            );
+            dropdown.click();
+
+            // Espera a que las opciones del listbox sean visibles en el DOM
+            List<WebElement> options = wait.until(
+                    ExpectedConditions.visibilityOfAllElementsLocatedBy(
+                            By.cssSelector("ul[role='listbox'] li")
+                    )
+            );
+
+            // Recorre las opciones buscando la que coincida con el texto (ignorando mayúsculas/minúsculas)
+            boolean found = false;
+            for (WebElement option : options) {
+                if (option.getText().trim().equalsIgnoreCase(optionText)) {
+                    option.click();
+                    found = true;
+                    break;
+                }
+            }
+
+            // Si ninguna opción coincidió, lanza un error descriptivo
+            if (!found) {
+                throw new NoSuchElementException(
+                        String.format("El texto '%s' no coincide con ninguna opción disponible en el listbox.", optionText)
+                );
+            }
+
+        } catch (Exception e) {
+            throw new AssertionError(String.format(
+                    "[ACTION FAILED] Element: %s | Locator: %s | Action: selectReactOptionByText | Value: %s | Error: %s",
+                    elementName,
+                    dropdownLocator,
+                    optionText,
                     e.getClass().getSimpleName()
             ), e);
         }

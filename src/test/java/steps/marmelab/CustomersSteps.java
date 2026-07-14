@@ -2,36 +2,26 @@ package steps.marmelab;
 
 import drivers.DriverFactory;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import pages.marmelab.customers.CustomerCreatePage;
 import pages.marmelab.customers.CustomerEditPage;
-//import pages.marmelab.customers.CustomerShowPage;
 import pages.marmelab.customers.CustomersListPage;
-import support.ActionsCommon;
 import support.CustomAssertions;
 import utils.DateUtils;
 
 public class CustomersSteps {
 
-    private final ActionsCommon actionsCommon;
     private final CustomersListPage customersListPage;
     private final CustomerCreatePage customerCreatePage;
     private final CustomerEditPage customerEditPage;
-    //private final CustomerShowPage customerShowPage;
-
-    private String createdEmail;
-    private String editedEmail;
 
     public CustomersSteps() {
         WebDriver driver = DriverFactory.getDriver();
-        this.actionsCommon = new ActionsCommon(driver);
         this.customersListPage = new CustomersListPage(driver);
         this.customerCreatePage = new CustomerCreatePage(driver);
         this.customerEditPage = new CustomerEditPage(driver);
-        //this.customerShowPage = new CustomerShowPage(driver);
     }
 
     @When("Agrego un customer")
@@ -60,7 +50,6 @@ public class CustomersSteps {
 
     @When("Ingreso email {string}")
     public void ingreso_email(String email) {
-        this.createdEmail = email;
         customerCreatePage.typeEmail(email);
     }
 
@@ -151,15 +140,43 @@ public class CustomersSteps {
     @Then("Se valida el customer recien creado")
     public void se_valida_el_customer_recien_creado() {
         CustomAssertions.assertEqualsText("Q\nQA Automation", customersListPage.getTextFromTableBody(0, 1), "Value Name");
-        CustomAssertions.assertEqualsText("12-04-2026", customersListPage.getTextFromTableBody(0, 2), "Value Last Seen");
+        CustomAssertions.assertEqualsText(DateUtils.getCurrentDate("dd-MM-yyyy"), customersListPage.getTextFromTableBody(0, 2), "Value Last Seen");
         CustomAssertions.assertEqualsText("0", customersListPage.getTextFromTableBody(0, 3), "Value Orders");
         CustomAssertions.assertEqualsText("US$0,00", customersListPage.getTextFromTableBody(0, 4), "Value Total spent");
-        CustomAssertions.assertContainsText("12-04-2026", customersListPage.getTextFromTableBody(0, 5), "Value Latest purchase");
+        CustomAssertions.assertContainsText(DateUtils.getCurrentDate("dd-MM-yyyy"), customersListPage.getTextFromTableBody(0, 5), "Value Latest purchase");
         CustomAssertions.assertEqualsText("No", customersListPage.getTextFromTableBody(0, 6), "Value News");
         CustomAssertions.assertEqualsText("", customersListPage.getTextFromTableBody(0, 7), "Value Segments");
     }
 
-    /*
+    @When("Se presiona el nombre del usuario del registro {int}")
+    public void se_presiona_el_nombre_del_usuario_del_registro(int index) {
+        customersListPage.editCustomer(index);
+        CustomAssertions.assertElementVisible(
+                customerEditPage.isHeaderDisplayed(),
+                customerEditPage.getByHeader(),
+                "Customer Edit Header"
+        );
+        CustomAssertions.assertElementVisible(
+                customerEditPage.isLabelFirstSeenDisplayed(),
+                customerEditPage.getByLabelFirstSeen(),
+                "First Seen Label Edit");
+        CustomAssertions.assertEqualsText(
+                DateUtils.getCurrentDate("dd-MM-yyyy"),
+                customerEditPage.getByLabelFirstSeen(),
+                customerEditPage.getTextLabelFirstSeen(),
+                "First Seen Date Edit");
+        CustomAssertions.assertElementVisible(
+                customerEditPage.isLabelLastSeenDisplayed(),
+                customerEditPage.getByLabelLastSeen(),
+                "Last Seen Label Edit");
+        CustomAssertions.assertEqualsText(
+                DateUtils.getCurrentDate("dd-MM-yyyy"),
+                customerEditPage.getByLabelLastSeen(),
+                customerEditPage.getTextLabelLastSeen(),
+                "Last Seen Date Edit");
+    }
+
+
     @When("Ingreso first name modificado {string}")
     public void ingreso_first_name_modificado(String firstName) {
         customerEditPage.typeFirstName(firstName);
@@ -177,7 +194,6 @@ public class CustomersSteps {
 
     @When("Ingreso email modificado {string}")
     public void ingreso_email_modificado(String email) {
-        this.editedEmail = email;
         customerEditPage.typeEmail(email);
     }
 
@@ -221,35 +237,43 @@ public class CustomersSteps {
         customerEditPage.typeConfirmPassword(confirmPassword);
     }
 
-    @Then("Se visualiza el historial del customer recien modificado")
-    public void se_visualiza_el_historial_del_customer_recien_modificado() {
+    @When("Click en el botón SAVE edit customer")
+    public void click_en_el_boton_save_edit_customer() {
         CustomAssertions.assertElementVisible(
-                customerShowPage.isHistoryDisplayed(),
-                customerShowPage.getByHistoryContainer(),
-                "Customer History (Edited)"
+                customerEditPage.isButtonSaveDisplayed(),
+                customerEditPage.getButtonSave(),
+                "Edit Customer Button Save"
         );
+        customerEditPage.clickSave();
     }
 
-    @When("Selecciono el customer")
-    public void selecciono_el_customer() {
-        String emailToUse = (editedEmail != null) ? editedEmail : createdEmail;
-        customersListPage.selectRowForEmail(emailToUse);
+    @Then("Se valida el customer recien modificado")
+    public void se_valida_el_customer_recien_modificado() {
+        CustomAssertions.assertEqualsText("Q\nQA Edit Automation Edit", customersListPage.getTextFromTableBody(0, 1), "Value Name");
+        CustomAssertions.assertEqualsText(DateUtils.getCurrentDate("dd-MM-yyyy"), customersListPage.getTextFromTableBody(0, 2), "Value Last Seen");
+        CustomAssertions.assertEqualsText("0", customersListPage.getTextFromTableBody(0, 3), "Value Orders");
+        CustomAssertions.assertEqualsText("US$0,00", customersListPage.getTextFromTableBody(0, 4), "Value Total spent");
+        CustomAssertions.assertContainsText(DateUtils.getCurrentDate("dd-MM-yyyy"), customersListPage.getTextFromTableBody(0, 5), "Value Latest purchase");
+        CustomAssertions.assertEqualsText("Yes", customersListPage.getTextFromTableBody(0, 6), "Value News");
+        CustomAssertions.assertEqualsText("Regular", customersListPage.getTextFromTableBody(0, 7), "Value Segments");
     }
 
-    @When("Click sobre el botón de eliminar customer")
-    public void click_sobre_el_boton_de_eliminar_customer() {
-        String emailToUse = (editedEmail != null) ? editedEmail : createdEmail;
-        customersListPage.clickDeleteForEmail(emailToUse);
-        customersListPage.confirmDeleteIfDialogAppears();
+    @When("Se selecciona el Customer {int}")
+    public void se_selecciona_el_customer(int index){
+        customersListPage.selectCustomer(index);
     }
 
-    @Then("Se visualiza el mensaje informativo que no encuentra customers para los filtros ingresados")
-    public void se_visualiza_el_mensaje_informativo_que_no_encuentra_customers_para_los_filtros_ingresados() {
+    @And("Se presiona el botón DELETE")
+    public void se_presiona_el_boton_delete(){
+        customersListPage.clickDeleteCustomer();
+    }
+
+    @Then("Se visualiza un mensaje informando que no se encontro el customer")
+    public void se_visualiza_un_mensaje_informando_que_no_se_encontro_el_customer(){
         CustomAssertions.assertElementVisible(
                 customersListPage.isEmptyStateDisplayed(),
                 customersListPage.getByEmptyState(),
-                "Customers Empty State"
+                "No Customers found using the current filters."
         );
     }
-    */
 }

@@ -1,27 +1,33 @@
 package pages.marmelab.customers;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.BasePage;
 
 public class CustomerEditPage extends BasePage {
 
-    private final By loading = By.cssSelector(".MuiCardContent-root.css-1op5rrm"); 
+    private final By loading = By.cssSelector(".MuiCardContent-root.css-1op5rrm");
 
-    private final By inputFirstName = By.cssSelector("input[id=':r24:']"); 
-    private final By inputLastName = By.cssSelector("input[id=':r26:']"); 
-    private final By selectSegment = By.cssSelector("div[id=':r2q:']");
-    private final By inputEmail = By.cssSelector("input[id=':r28:']"); 
-    private final By toggleHasNewsletter = By.cssSelector("div[id=':r2s:']"); 
-    private final By inputBirthday = By.cssSelector("input[id=':r2a:']"); 
-    private final By inputAddress = By.cssSelector("textarea[id=':r2c:']");
-    private final By inputCity = By.cssSelector("input[id=':r2e:']");
-    private final By inputState = By.cssSelector("input[id=':r2g:']");
-    private final By inputZipcode = By.cssSelector("input[id=':r2i:']");
-    private final By inputPassword = By.cssSelector("input[id=':r2k:']");
-    private final By inputConfirmPassword = By.cssSelector("input[id=':r2n:']");
+    private final By inputFirstName = By.cssSelector("input[name='first_name']");
+    private final By inputLastName = By.cssSelector("input[name='last_name']");
+    private final By inputEmail = By.cssSelector("input[name='email']");
+    private final By inputBirthday = By.cssSelector("input[name='birthday']");
+    private final By inputAddress = By.cssSelector("textarea[name='address']");
+    private final By inputCity = By.cssSelector("input[name='city']");
+    private final By inputState = By.cssSelector("input[name='stateAbbr']");
+    private final By inputZipcode = By.cssSelector("input[name='zipcode']");
+    private final By inputPassword = By.cssSelector("input[name='password']");
+    private final By inputConfirmPassword = By.cssSelector("input[name='confirm_password']");
+
+    private final By selectSegment = By.xpath("(//div[@role='combobox'])[1]");
+    private final By toggleHasNewsletter = By.xpath("(//div[@role='combobox'])[2]");
 
     private final By buttonSave = By.cssSelector("button[aria-label='Save']");
+
+    private final By labelFirstSeen = By.xpath("(//span[@class='MuiTypography-root MuiTypography-body2 css-135m6i8'])[1]");
+    private final By labelLastSeen  = By.xpath("(//span[@class='MuiTypography-root MuiTypography-body2 css-135m6i8'])[2]");
 
     public CustomerEditPage(WebDriver driver) {
         super(driver);
@@ -44,7 +50,12 @@ public class CustomerEditPage extends BasePage {
     }
 
     public void selectSegment(String segment) {
-        selectByVisibleText(selectSegment, segment, "Segment (Edit)");
+        selectReactOptionByText(selectSegment, segment, "Segment (Edit)");
+        pressKeyGeneric(Keys.ESCAPE);
+        wait.until(
+                ExpectedConditions.invisibilityOfElementLocated(
+                        By.cssSelector("ul[role='listbox'] li")
+                ));
     }
 
     public void typeEmail(String value) {
@@ -52,7 +63,7 @@ public class CustomerEditPage extends BasePage {
     }
 
     public void setHasNewsletter(String value) {
-        selectByVisibleText(toggleHasNewsletter, value, "Has Newsletter (Toggle)");
+        selectReactOptionByText(toggleHasNewsletter, value, "Has Newsletter (Toggle)");
     }
 
     public void typeBirthday(String value) {
@@ -85,5 +96,37 @@ public class CustomerEditPage extends BasePage {
 
     public void clickSave() {
         click(buttonSave, "Botón SAVE (Edit)");
+    }
+
+    public boolean isButtonSaveDisplayed() {
+        return isElementVisible(buttonSave);
+    }
+
+    public By getButtonSave() {
+        return buttonSave;
+    }
+
+    public boolean isLabelFirstSeenDisplayed() {
+        return isElementVisible(labelFirstSeen);
+    }
+
+    public String getTextLabelFirstSeen() {
+        return getText(labelFirstSeen);
+    }
+
+    public By getByLabelFirstSeen() {
+        return labelFirstSeen;
+    }
+
+    public boolean isLabelLastSeenDisplayed() {
+        return isElementVisible(labelLastSeen);
+    }
+
+    public String getTextLabelLastSeen() {
+        return getText(labelLastSeen);
+    }
+
+    public By getByLabelLastSeen() {
+        return labelLastSeen;
     }
 }
