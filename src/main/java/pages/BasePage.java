@@ -72,7 +72,7 @@ public abstract class BasePage {
     protected void type(By locator, String text, String elementName) {
         try {
             WebElement element = driver.findElement(locator);
-            element.clear();
+            element.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
             element.sendKeys(text);
         } catch (Exception e) {
             throw new AssertionError(String.format(

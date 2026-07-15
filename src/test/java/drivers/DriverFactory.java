@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DriverFactory {
 
@@ -64,7 +66,14 @@ public class DriverFactory {
             optionListChrome.add("--start-maximized");
         }
         optionListChrome.add("--incognito");
+        optionListChrome.add("--lang=es-CL");
         optionsChrome.addArguments(optionListChrome);
+
+        // Fuerza también el idioma/formato a nivel de preferencias internas de Chrome
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("intl.accept_languages", "es-CL,es");
+        optionsChrome.setExperimentalOption("prefs", prefs);
+
         return optionsChrome;
     }
 
@@ -82,6 +91,11 @@ public class DriverFactory {
         firefoxOptions.addPreference("dom.webnotifications.enabled", false); // bloquea popups de notificaciones
         firefoxOptions.addPreference("geo.enabled", false);                  // bloquea popups de geolocalización
         firefoxOptions.addPreference("media.volume_scale", "0.0");           // silencia audio
+
+        // Locale real usado por la API Intl (esto es lo que faltaba)
+        firefoxOptions.addPreference("intl.locale.requested", "es-CL");
+        // Complementario: navigator.language / Accept-Language
+        firefoxOptions.addPreference("intl.accept_languages", "es-CL,es");
 
         return firefoxOptions;
     }
