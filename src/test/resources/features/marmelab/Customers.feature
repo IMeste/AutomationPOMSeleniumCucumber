@@ -8,7 +8,7 @@ Feature: Marmelab React Admin - CRUD Customers
     And Presionar botón SIGN IN
     Then Se redirige a "https://marmelab.com/react-admin-demo/#/"
 
-  @regression @pr @high @crudcustomers
+  @regression @pr @high
   Scenario: CRUD Costumers
     When Click sobre el menú de customers
     And Agrego un customer
