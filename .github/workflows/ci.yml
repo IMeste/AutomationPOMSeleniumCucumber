@@ -49,6 +49,11 @@ jobs:
             exit 1
           fi
 
+      - name: Generate es_CL locale
+        run: |
+          sudo locale-gen es_CL.UTF-8
+          sudo update-locale
+
       - name: Run tests
         run: mvn clean test -Denvironment=qa -Dbrowser=${{ matrix.browser }} -Dcucumber.filter.tags="${{ steps.tags.outputs.filter }}"
 
